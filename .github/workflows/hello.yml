@@ -1,0 +1,16 @@
+name: hello
+on: [push, workflow_dispatch]
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Say hello
+        run: echo "Hello from GitHub Actions, running on $(uname -a)"
+      - name: Use the secret
+        env:
+          DEMO_SECRET: ${{ secrets.DEMO_SECRET }}
+        run: |
+          if [ -n "$DEMO_SECRET" ]; then echo "Secret is set"; else echo "Secret missing"; exit 1; fi
+          echo "Trying to print it: $DEMO_SECRET"
